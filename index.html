@@ -25,8 +25,6 @@
           <!-- As páginas detalhadas entram depois. Por enquanto,
                o dashboard já mostra um resumo de cada área. -->
           <li><a href="monitoramento.html">Monitoramento</a></li>
-          <li><a href="torque.html">Torque</a></li>
-          <li><a href="caixa.html">Caixa Inteligente</a></li>
           <li><a href="historico.html">Histórico</a></li>
         </ul>
       </nav>
@@ -57,20 +55,10 @@
             <strong id="total-apertos">—</strong>
             <p id="descricao-apertos"><b>Aguardando integração</b> para contabilizar apertos</p>
           </article>
-          <article class="card indicador indicador--verde">
-            <div class="indicador__cabecalho"><span>Taxa de acerto</span><span>✓</span></div>
-            <strong id="taxa-acerto">—</strong>
-            <p id="descricao-acerto"><b>Aguardando regra</b> de acerto da Cavaletti</p>
-          </article>
           <article class="card indicador indicador--amarelo">
             <div class="indicador__cabecalho"><span>Equipamentos online</span><span>◉</span></div>
             <strong id="equipamentos-online">0 <small>/ 5</small></strong>
             <p id="descricao-equipamentos"><b>5 ESP32</b> aguardando sinal</p>
-          </article>
-          <article class="card indicador indicador--roxo">
-            <div class="indicador__cabecalho"><span>Nível da caixa</span><span>▣</span></div>
-            <strong id="nivel-caixa">—</strong>
-            <p id="descricao-caixa"><b>Capacidade</b> ainda não medida</p>
           </article>
         </section>
 
@@ -113,18 +101,10 @@
             </div>
           </article>
         </section>
-
-        <section class="card resultado-teste">
-          <div class="resultado-teste__icone">↘</div>
-          <div><p class="rotulo">RESULTADO DE UM TESTE</p><h3 id="titulo-teste">Redução aproximada de 30% no torque</h3><p>Resultado de uma única medição com aparelho no braço e torquímetro. Deve ser validado com novos testes antes de qualquer conclusão geral.</p></div>
-          <span>1 MEDIÇÃO</span>
-        </section>
       </main>
     </div>
 
   </div>
-  <script src="js/demo-data.js"></script>
-  <script src="js/common.js"></script>
   <script src="js/dashboard.js"></script>
 </body>
 </html>
