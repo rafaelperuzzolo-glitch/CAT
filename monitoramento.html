@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cavalleti — Monitoramento de equipamentos</title>
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/pages.css">
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="sidebar__logo"><img src="assets/cavalleti-logo-mark.png" alt="Cavalleti"><span>Sistema de monitoramento</span></div>
+      <nav><ul>
+        <li><a href="index.html">Dashboard</a></li>
+        <li><a href="monitoramento.html" class="ativo">Monitoramento</a></li>
+        <li><a href="torque.html">Torque</a></li>
+        <li><a href="caixa.html">Caixa Inteligente</a></li>
+        <li><a href="historico.html">Histórico</a></li>
+      </ul></nav>
+    </aside>
+    <div class="main">
+      <header class="topbar"><h1>Monitoramento</h1><div class="topbar__info"><span class="topbar__status"><i></i> Aguardando sinais do ESP32</span><time data-relogio>--:--:--</time></div></header>
+      <main class="content">
+        <section class="titulo-tela"><div><p class="rotulo">ESTAÇÕES DE TRABALHO</p><h2>Parafusadeiras e ESP32</h2></div><p>O projeto foi configurado para cinco estações. Os estados serão atualizados quando os sinais começarem a ser enviados.</p></section>
+        <section class="equipamentos-grid" id="equipamentos-grid">
+          <article class="card equipamento-card equipamento-card--offline"><div class="equipamento-card__topo"><div><p class="rotulo">ESTAÇÃO 01</p><h3>Parafusadeira 01 · ESP32 01</h3></div><span class="status-texto status-texto--offline">AGUARDANDO</span></div><div class="dados-equipamento"><div><span>Apertos</span><b>—</b></div><div><span>Acertos</span><b>—</b></div><div><span>Torque</span><b>—</b></div><div><span>Último sinal</span><b>Sem dados</b></div></div></article>
+          <article class="card equipamento-card equipamento-card--offline"><div class="equipamento-card__topo"><div><p class="rotulo">ESTAÇÃO 02</p><h3>Parafusadeira 02 · ESP32 02</h3></div><span class="status-texto status-texto--offline">AGUARDANDO</span></div><div class="dados-equipamento"><div><span>Apertos</span><b>—</b></div><div><span>Acertos</span><b>—</b></div><div><span>Torque</span><b>—</b></div><div><span>Último sinal</span><b>Sem dados</b></div></div></article>
+          <article class="card equipamento-card equipamento-card--offline"><div class="equipamento-card__topo"><div><p class="rotulo">ESTAÇÃO 03</p><h3>Parafusadeira 03 · ESP32 03</h3></div><span class="status-texto status-texto--offline">AGUARDANDO</span></div><div class="dados-equipamento"><div><span>Apertos</span><b>—</b></div><div><span>Acertos</span><b>—</b></div><div><span>Torque</span><b>—</b></div><div><span>Último sinal</span><b>Sem dados</b></div></div></article>
+          <article class="card equipamento-card equipamento-card--offline"><div class="equipamento-card__topo"><div><p class="rotulo">ESTAÇÃO 04</p><h3>Parafusadeira 04 · ESP32 04</h3></div><span class="status-texto status-texto--offline">AGUARDANDO</span></div><div class="dados-equipamento"><div><span>Apertos</span><b>—</b></div><div><span>Acertos</span><b>—</b></div><div><span>Torque</span><b>—</b></div><div><span>Último sinal</span><b>Sem dados</b></div></div></article>
+          <article class="card equipamento-card equipamento-card--offline"><div class="equipamento-card__topo"><div><p class="rotulo">ESTAÇÃO 05</p><h3>Parafusadeira 05 · ESP32 05</h3></div><span class="status-texto status-texto--offline">AGUARDANDO</span></div><div class="dados-equipamento"><div><span>Apertos</span><b>—</b></div><div><span>Acertos</span><b>—</b></div><div><span>Torque</span><b>—</b></div><div><span>Último sinal</span><b>Sem dados</b></div></div></article>
+        </section>
+      </main>
+    </div>
+  </div>
+  <script src="js/demo-data.js"></script>
+<script src="js/common.js"></script>
+  <script src="js/monitoramento.js"></script>
+</body>
+</html>

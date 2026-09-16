@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cavalleti — Histórico de operações</title>
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/pages.css">
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar"><div class="sidebar__logo"><img src="assets/cavalleti-logo-mark.png" alt="Cavalleti"><span>Sistema de monitoramento</span></div><nav><ul><li><a href="index.html">Dashboard</a></li><li><a href="monitoramento.html">Monitoramento</a></li><li><a href="torque.html">Torque</a></li><li><a href="caixa.html">Caixa Inteligente</a></li><li><a href="historico.html" class="ativo">Histórico</a></li></ul></nav></aside>
+    <div class="main">
+      <header class="topbar"><h1>Histórico</h1><div class="topbar__info"><span class="topbar__status"><i></i> Aguardando eventos do sistema</span><time data-relogio>--:--:--</time></div></header>
+      <main class="content">
+        <section class="titulo-tela"><div><p class="rotulo">OPERAÇÕES RECENTES</p><h2>Histórico da estação</h2></div><p>Exemplo de como os eventos enviados pelo sistema poderão ser exibidos futuramente.</p></section>
+        <div class="filtros" aria-label="Filtros de histórico"><button class="filtro ativo" type="button" data-filtro="all">Todos</button><button class="filtro" type="button" data-filtro="tightening">Apertos</button><button class="filtro" type="button" data-filtro="alert">Alertas</button><button class="filtro" type="button" data-filtro="box">Caixa</button></div>
+        <section class="card tabela-wrap"><table class="tabela-historico"><thead><tr><th>HORÁRIO</th><th>TIPO</th><th>EQUIPAMENTO</th><th>TORQUE</th><th>RESULTADO</th></tr></thead><tbody id="historico-corpo"><tr><td colspan="5">Nenhum evento recebido ainda.</td></tr></tbody></table></section>
+      </main>
+    </div>
+  </div>
+  <script src="js/demo-data.js"></script>
+<script src="js/common.js"></script>
+  <script src="js/historico.js"></script>
+</body>
+</html>

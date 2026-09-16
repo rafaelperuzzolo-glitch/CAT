@@ -1,0 +1,212 @@
+/*
+  style.css
+  Layout base do sistema: reset + estrutura de sidebar/topbar.
+  Estilos específicos de cada tela (cards do dashboard, gráficos,
+  etc.) ficam em arquivos separados, como dashboard.css.
+*/
+
+/* Reset simples */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--fonte-base);
+  background-color: var(--cor-fundo);
+  color: var(--cor-texto);
+  line-height: 1.5;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Estrutura geral: sidebar fixa + área principal */
+.app {
+  display: grid;
+  grid-template-columns: var(--largura-sidebar) 1fr;
+  min-height: 100vh;
+}
+
+/* --- Sidebar --- */
+.sidebar {
+  background-color: var(--cor-fundo-elevado);
+  border-right: 1px solid var(--cor-borda);
+  padding: var(--espaco-lg) 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar__logo {
+  padding: 0 var(--espaco-lg) var(--espaco-lg) var(--espaco-lg);
+  font-weight: 600;
+  font-size: 1.1rem;
+  border-bottom: 1px solid var(--cor-borda);
+  margin-bottom: var(--espaco-md);
+}
+
+.sidebar__logo img {
+  display: block;
+  width: 136px;
+  max-width: 100%;
+  border-radius: 2px;
+  margin-bottom: 9px;
+}
+
+.sidebar__logo span {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 400;
+  color: var(--cor-texto-secundario);
+  margin-top: 2px;
+}
+
+.sidebar nav ul {
+  list-style: none;
+}
+
+.sidebar nav li a {
+  display: block;
+  padding: var(--espaco-sm) var(--espaco-lg);
+  color: var(--cor-texto-secundario);
+  border-left: 3px solid transparent;
+  font-size: 0.95rem;
+}
+
+.sidebar nav li a:hover {
+  color: var(--cor-texto);
+}
+
+.sidebar nav li a.ativo {
+  color: var(--cor-texto);
+  border-left-color: var(--cor-primaria);
+  background-color: var(--cor-primaria-suave);
+}
+
+.sidebar nav li a.desabilitado {
+  color: #555f6b;
+  cursor: default;
+}
+
+.controle-apresentacao button {
+  border: 1px solid var(--cor-primaria);
+  border-radius: var(--raio-borda);
+  padding: 5px 9px;
+  color: #fff;
+  background: var(--cor-primaria-suave);
+  font-size: .67rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.controle-apresentacao button:hover,
+.controle-apresentacao button.ativo {
+  background: var(--cor-primaria);
+}
+
+.controle-apresentacao button:disabled { cursor: not-allowed; opacity: .55; }
+
+.botao-atualizar {
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-borda);
+  padding: 4px 8px;
+  color: var(--cor-texto-secundario);
+  background: transparent;
+  font-size: .68rem;
+}
+
+.botao-atualizar:hover { border-color: var(--cor-primaria); color: var(--cor-texto); }
+
+/* --- Área principal --- */
+.main {
+  display: flex;
+  flex-direction: column;
+}
+
+.topbar {
+  background-color: var(--cor-fundo-elevado);
+  border-bottom: 1px solid var(--cor-borda);
+  padding: var(--espaco-md) var(--espaco-lg);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.topbar h1 {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.topbar__info {
+  display: flex;
+  align-items: center;
+  gap: var(--espaco-md);
+}
+
+.topbar__status {
+  font-size: 0.8rem;
+  color: var(--cor-texto-secundario);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-borda);
+  padding: 4px 10px;
+}
+
+.topbar__status i {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  margin-right: 5px;
+  border-radius: 50%;
+  background: var(--cor-alerta);
+}
+
+.content {
+  padding: var(--espaco-lg);
+  flex: 1;
+}
+
+/* --- Responsivo: em telas estreitas (tablet retrato), sidebar vira topo --- */
+@media (max-width: 900px) {
+  .app {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar {
+    flex-direction: row;
+    align-items: center;
+    overflow-x: auto;
+    border-right: none;
+    border-bottom: 1px solid var(--cor-borda);
+    padding: var(--espaco-sm);
+  }
+
+  .sidebar__logo {
+    display: none;
+  }
+
+  .sidebar nav ul {
+    display: flex;
+  }
+
+  .sidebar nav li a {
+    border-left: none;
+    border-bottom: 3px solid transparent;
+    white-space: nowrap;
+  }
+
+  .sidebar nav li a.ativo {
+    border-left-color: transparent;
+    border-bottom-color: var(--cor-primaria);
+  }
+
+}
+
+@media (max-width: 600px) {
+  .topbar__info { gap: 6px; }
+  .topbar time { display: none; }
+  .controle-apresentacao button,
+  .botao-atualizar { padding: 5px 7px; font-size: .62rem; }
+}

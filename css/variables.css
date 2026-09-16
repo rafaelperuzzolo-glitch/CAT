@@ -1,0 +1,42 @@
+/*
+  variables.css
+  Todas as cores, fontes e medidas do sistema ficam aqui.
+  Quando a identidade visual da Cavalleti for definida,
+  só este arquivo precisa mudar — o resto do CSS não sabe
+  o valor exato das cores, só o nome da variável.
+*/
+
+:root {
+  /* --- Cores de fundo --- */
+  --cor-fundo: #0d0f12;          /* grafite quase preto */
+  --cor-fundo-elevado: #171a1f;  /* sidebar, cards, topbar */
+  --cor-fundo-suave: #1d2127;    /* áreas de apoio */
+  --cor-borda: #2b3038;          /* linhas divisórias e contornos de card */
+
+  /* --- Cores de texto --- */
+  --cor-texto: #f3f4f5;          /* texto principal */
+  --cor-texto-secundario: #969ca6; /* legendas, timestamps, texto de apoio */
+
+  /* --- Cor de marca / interação (provisória) --- */
+  --cor-primaria: #d52b32;       /* vermelho provisório inspirado na marca Cavaletti */
+  --cor-primaria-clara: #f04c52;
+  --cor-primaria-escura: #921d25;
+  --cor-primaria-suave: rgba(213, 43, 50, 0.13);
+
+  /* --- Cores de status (uso reservado só para status) --- */
+  --cor-sucesso: #46b876;        /* online / correto / dentro do esperado */
+  --cor-alerta: #e0a63e;         /* atenção / próximo do limite */
+  --cor-erro: #d9534f;           /* offline / incorreto / fora do esperado */
+  --cor-roxo: #9b79d4;           /* apenas para diferenciar um indicador secundário */
+
+  /* --- Tipografia --- */
+  --fonte-base: -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  --fonte-mono: ui-monospace, "SFMono-Regular", "Consolas", monospace;
+
+  /* --- Medidas --- */
+  --largura-sidebar: 220px;
+  --raio-borda: 4px;
+  --espaco-sm: 8px;
+  --espaco-md: 16px;
+  --espaco-lg: 24px;
+}
