@@ -6,7 +6,7 @@
 // WIFI
 // ==========================================
 
-const char* WIFI_SSID = "moto g86 5G_1431";
+const char* WIFI_SSID = "moto g86";
 const char* WIFI_SENHA = "Familia99";
 
 // ==========================================
