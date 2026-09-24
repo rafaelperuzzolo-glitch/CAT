@@ -1,526 +1,640 @@
-// ==========================================
-// CONFIGURAÇÕES DA API
-// ==========================================
+<!DOCTYPE html>
+<html lang="pt-BR">
 
-const API_URL =
-  "https://symmetrical-space-sniffle-x95x5xw4799hvv47-3000.app.github.dev/api/status";
+<head>
 
+  <meta charset="UTF-8">
 
-// ==========================================
-// ESTAÇÕES
-// ==========================================
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
 
-const ESTACOES = [
-  {
-    esp32: "ESP32 01",
-    estacao: "ESTAÇÃO 01"
-  },
-  {
-    esp32: "ESP32 02",
-    estacao: "ESTAÇÃO 02"
-  },
-  {
-    esp32: "ESP32 03",
-    estacao: "ESTAÇÃO 03"
-  },
-  {
-    esp32: "ESP32 04",
-    estacao: "ESTAÇÃO 04"
-  },
-  {
-    esp32: "ESP32 05",
-    estacao: "ESTAÇÃO 05"
-  }
-];
+  <title>Cavalleti — Monitoramento de equipamentos</title>
 
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/pages.css">
 
-// ==========================================
-// FORMATAR DATA/HORA
-// ==========================================
+</head>
 
-function formatarDataHora(valor) {
 
-  if (!valor) {
-    return "Sem dados";
-  }
+<body>
 
+  <div class="app">
 
-  const data =
-    new Date(valor);
 
+    <!-- ==========================================
+         SIDEBAR
+         ========================================== -->
 
-  if (Number.isNaN(data.getTime())) {
-    return "Sem dados";
-  }
+    <aside class="sidebar">
 
+      <div class="sidebar__logo">
 
-  return data.toLocaleTimeString(
-    "pt-BR",
-    {
-      hour: "2-digit",
-      minute: "2-digit",
-      second: "2-digit"
-    }
-  );
+        <img
+          src="assets/cavalleti-logo-mark.png"
+          alt="Cavalleti"
+        >
 
-}
+        <span>
+          Sistema de monitoramento
+        </span>
 
+      </div>
 
-// ==========================================
-// OBTER EQUIPAMENTO
-// ==========================================
 
-function obterEquipamento(
-  equipamentos,
-  esp32
-) {
+      <nav>
 
-  if (!equipamentos) {
-    return null;
-  }
+        <ul>
 
+          <li>
 
-  return equipamentos[esp32] ?? null;
+            <a href="index.html">
+              Dashboard
+            </a>
 
-}
+          </li>
 
 
-// ==========================================
-// ATUALIZAR CARD
-// ==========================================
+          <li>
 
-function atualizarCard(
-  card,
-  equipamento,
-  esp32
-) {
+            <a
+              href="monitoramento.html"
+              class="ativo"
+            >
+              Monitoramento
+            </a>
 
-  if (!card) {
-    return;
-  }
+          </li>
 
 
-  // ========================================
-  // SE NÃO EXISTE DADO
-  // ========================================
+          <li>
 
-  if (!equipamento) {
+            <a href="historico.html">
+              Histórico
+            </a>
 
-    card.classList.remove(
-      "equipamento-card--online"
-    );
+          </li>
 
+        </ul>
 
-    card.classList.add(
-      "equipamento-card--offline"
-    );
+      </nav>
 
+    </aside>
 
-    const statusTexto =
-      card.querySelector(
-        ".status-texto"
-      );
 
+    <!-- ==========================================
+         ÁREA PRINCIPAL
+         ========================================== -->
 
-    if (statusTexto) {
+    <div class="main">
 
-      statusTexto.classList.remove(
-        "status-texto--online"
-      );
 
+      <!-- ==========================================
+           TOPBAR
+           ========================================== -->
 
-      statusTexto.classList.add(
-        "status-texto--offline"
-      );
+      <header class="topbar">
 
+        <h1>
+          Monitoramento
+        </h1>
 
-      statusTexto.textContent =
-        "AGUARDANDO";
 
-    }
+        <div class="topbar__info">
 
+          <span class="topbar__status">
 
-    return;
-  }
+            <i></i>
 
+            Aguardando sinais do ESP32
 
-  // ========================================
-  // STATUS ONLINE
-  // ========================================
+          </span>
 
-  const online =
-    equipamento.online === true;
 
+          <time data-relogio>
+            --:--:--
+          </time>
 
-  const statusTexto =
-    card.querySelector(
-      ".status-texto"
-    );
+        </div>
 
+      </header>
 
-  if (online) {
 
-    card.classList.remove(
-      "equipamento-card--offline"
-    );
+      <!-- ==========================================
+           CONTEÚDO
+           ========================================== -->
 
+      <main class="content">
 
-    card.classList.add(
-      "equipamento-card--online"
-    );
 
+        <!-- ==========================================
+             TÍTULO
+             ========================================== -->
 
-    if (statusTexto) {
+        <section class="titulo-tela">
 
-      statusTexto.classList.remove(
-        "status-texto--offline"
-      );
+          <div>
 
+            <p class="rotulo">
+              ESTAÇÕES DE TRABALHO
+            </p>
 
-      statusTexto.classList.add(
-        "status-texto--online"
-      );
 
+            <h2>
+              Parafusadeiras e ESP32
+            </h2>
 
-      statusTexto.textContent =
-        "ONLINE";
+          </div>
 
-    }
 
-  } else {
+          <p>
+            Acompanhe em tempo real o estado das
+            estações, a produção e a comunicação
+            dos ESP32.
+          </p>
 
-    card.classList.remove(
-      "equipamento-card--online"
-    );
+        </section>
 
 
-    card.classList.add(
-      "equipamento-card--offline"
-    );
+        <!-- ==========================================
+             EQUIPAMENTOS
+             ========================================== -->
 
+        <section
+          class="equipamentos-grid"
+          id="equipamentos-grid"
+        >
 
-    if (statusTexto) {
 
-      statusTexto.classList.remove(
-        "status-texto--online"
-      );
+          <!-- ========================================
+               ESTAÇÃO 01
+               ======================================== -->
 
+          <article
+            class="card equipamento-card equipamento-card--offline"
+          >
 
-      statusTexto.classList.add(
-        "status-texto--offline"
-      );
+            <div class="equipamento-card__topo">
 
+              <div>
 
-      statusTexto.textContent =
-        "OFFLINE";
+                <p class="rotulo">
+                  ESTAÇÃO 01
+                </p>
 
-    }
 
-  }
+                <h3>
+                  Parafusadeira 01 · ESP32 01
+                </h3>
 
+              </div>
 
-  // ========================================
-  // NOME
-  // ========================================
 
-  const nomeEquipamento =
-    card.querySelector("h3");
+              <span
+                class="status-texto status-texto--offline"
+              >
+                AGUARDANDO
+              </span>
 
+            </div>
 
-  if (nomeEquipamento) {
 
-    nomeEquipamento.textContent =
-      `${equipamento.nome ?? "Parafusadeira"} · ${esp32}`;
+            <div class="dados-equipamento">
 
-  }
 
+              <div>
 
-  // ========================================
-  // DADOS
-  // ========================================
+                <span>
+                  Total de apertos
+                </span>
 
-  const dadosElementos =
-    card.querySelectorAll(
-      ".dados-equipamento > div"
-    );
+                <b>
+                  0
+                </b>
 
+              </div>
 
-  if (dadosElementos.length < 4) {
-    return;
-  }
 
+              <div>
 
-  // ========================================
-  // TOTAL DE APERTOS
-  // ========================================
+                <span>
+                  Últimos 10 segundos
+                </span>
 
-  const totalApertos =
-    dadosElementos[0]
-      .querySelector("b");
+                <b>
+                  0
+                </b>
 
+              </div>
 
-  if (totalApertos) {
 
-    totalApertos.textContent =
-      equipamento.apertos ?? 0;
+              <div>
 
-  }
+                <span>
+                  Último aperto
+                </span>
 
+                <b>
+                  Sem dados
+                </b>
 
-  // ========================================
-  // APERTOS NOS ÚLTIMOS 10 SEGUNDOS
-  // ========================================
+              </div>
 
-  const apertos10 =
-    dadosElementos[1]
-      .querySelector("b");
 
+              <div>
 
-  if (apertos10) {
+                <span>
+                  Último sinal online
+                </span>
 
-    apertos10.textContent =
-      equipamento.apertosUltimos10Segundos ?? 0;
+                <b>
+                  Sem dados
+                </b>
 
-  }
+              </div>
 
+            </div>
 
-  // ========================================
-  // ÚLTIMO APERTO
-  // ========================================
+          </article>
 
-  const ultimoAperto =
-    dadosElementos[2]
-      .querySelector("b");
 
+          <!-- ========================================
+               ESTAÇÃO 02
+               ======================================== -->
 
-  if (ultimoAperto) {
+          <article
+            class="card equipamento-card equipamento-card--offline"
+          >
 
-    ultimoAperto.textContent =
-      formatarDataHora(
-        equipamento.ultimoAperto
-      );
+            <div class="equipamento-card__topo">
 
-  }
+              <div>
 
+                <p class="rotulo">
+                  ESTAÇÃO 02
+                </p>
 
-  // ========================================
-  // ÚLTIMO SINAL ONLINE
-  // ========================================
 
-  const ultimoOnline =
-    dadosElementos[3]
-      .querySelector("b");
+                <h3>
+                  Parafusadeira 02 · ESP32 02
+                </h3>
 
+              </div>
 
-  if (ultimoOnline) {
 
-    ultimoOnline.textContent =
-      formatarDataHora(
-        equipamento.ultimoOnline
-      );
+              <span
+                class="status-texto status-texto--offline"
+              >
+                AGUARDANDO
+              </span>
 
-  }
+            </div>
 
-}
 
+            <div class="dados-equipamento">
 
-// ==========================================
-// ATUALIZAÇÃO DO MONITORAMENTO
-// ==========================================
+              <div>
 
-async function atualizarMonitoramento() {
+                <span>
+                  Total de apertos
+                </span>
 
-  try {
+                <b>
+                  0
+                </b>
 
-    const resposta =
-      await fetch(API_URL);
+              </div>
 
 
-    if (!resposta.ok) {
+              <div>
 
-      throw new Error(
-        `Erro na API (Status HTTP: ${resposta.status})`
-      );
+                <span>
+                  Últimos 10 segundos
+                </span>
 
-    }
+                <b>
+                  0
+                </b>
 
+              </div>
 
-    const dados =
-      await resposta.json();
 
+              <div>
 
-    const grid =
-      document.getElementById(
-        "equipamentos-grid"
-      );
+                <span>
+                  Último aperto
+                </span>
 
+                <b>
+                  Sem dados
+                </b>
 
-    if (!grid) {
-      return;
-    }
+              </div>
 
 
-    const cards =
-      grid.querySelectorAll(
-        ".equipamento-card"
-      );
+              <div>
 
+                <span>
+                  Último sinal online
+                </span>
 
-    // ========================================
-    // ATUALIZAR AS 5 ESTAÇÕES
-    // ========================================
+                <b>
+                  Sem dados
+                </b>
 
-    ESTACOES.forEach(
-      (estacao, index) => {
+              </div>
 
-        const card =
-          cards[index];
+            </div>
 
+          </article>
 
-        const equipamento =
-          obterEquipamento(
-            dados.equipamentos,
-            estacao.esp32
-          );
 
+          <!-- ========================================
+               ESTAÇÃO 03
+               ======================================== -->
 
-        atualizarCard(
-          card,
-          equipamento,
-          estacao.esp32
-        );
+          <article
+            class="card equipamento-card equipamento-card--offline"
+          >
 
-      }
-    );
+            <div class="equipamento-card__topo">
 
+              <div>
 
-    // ========================================
-    // STATUS DA TOPBAR
-    // ========================================
+                <p class="rotulo">
+                  ESTAÇÃO 03
+                </p>
 
-    atualizarStatusTopbar(
-      dados.equipamentosOnline ?? 0
-    );
 
-  }
+                <h3>
+                  Parafusadeira 03 · ESP32 03
+                </h3>
 
+              </div>
 
-  catch (erro) {
 
-    console.error(
-      "Falha ao atualizar o monitoramento:",
-      erro
-    );
+              <span
+                class="status-texto status-texto--offline"
+              >
+                AGUARDANDO
+              </span>
 
-  }
+            </div>
 
-}
 
+            <div class="dados-equipamento">
 
-// ==========================================
-// STATUS DA TOPBAR
-// ==========================================
+              <div>
 
-function atualizarStatusTopbar(
-  equipamentosOnline
-) {
+                <span>
+                  Total de apertos
+                </span>
 
-  const status =
-    document.querySelector(
-      ".topbar__status"
-    );
+                <b>
+                  0
+                </b>
 
+              </div>
 
-  if (!status) {
-    return;
-  }
 
+              <div>
 
-  if (equipamentosOnline === 0) {
+                <span>
+                  Últimos 10 segundos
+                </span>
 
-    status.innerHTML = `
-      <i></i>
-      Aguardando sinais do ESP32
-    `;
+                <b>
+                  0
+                </b>
 
-    return;
-  }
+              </div>
 
 
-  if (equipamentosOnline < 5) {
+              <div>
 
-    status.innerHTML = `
-      <i></i>
-      ${equipamentosOnline} de 5 ESP32 online
-    `;
+                <span>
+                  Último aperto
+                </span>
 
-    return;
-  }
+                <b>
+                  Sem dados
+                </b>
 
+              </div>
 
-  status.innerHTML = `
-    <i></i>
-    Todos os ESP32 estão online
-  `;
 
-}
+              <div>
 
+                <span>
+                  Último sinal online
+                </span>
 
-// ==========================================
-// RELÓGIO EM TEMPO REAL
-// ==========================================
+                <b>
+                  Sem dados
+                </b>
 
-function atualizarRelogio() {
+              </div>
 
-  const relogioEl =
-    document.querySelector(
-      "[data-relogio]"
-    );
+            </div>
 
+          </article>
 
-  if (!relogioEl) {
-    return;
-  }
 
+          <!-- ========================================
+               ESTAÇÃO 04
+               ======================================== -->
 
-  const agora =
-    new Date();
+          <article
+            class="card equipamento-card equipamento-card--offline"
+          >
 
+            <div class="equipamento-card__topo">
 
-  relogioEl.textContent =
-    agora.toLocaleTimeString(
-      "pt-BR"
-    );
+              <div>
 
-}
+                <p class="rotulo">
+                  ESTAÇÃO 04
+                </p>
 
 
-// ==========================================
-// INICIALIZAÇÃO
-// ==========================================
+                <h3>
+                  Parafusadeira 04 · ESP32 04
+                </h3>
 
-document.addEventListener(
-  "DOMContentLoaded",
-  () => {
+              </div>
 
-    // Atualização imediata
-    atualizarMonitoramento();
 
-    atualizarRelogio();
+              <span
+                class="status-texto status-texto--offline"
+              >
+                AGUARDANDO
+              </span>
 
+            </div>
 
-    // Atualiza os dados a cada segundo
-    setInterval(
-      atualizarMonitoramento,
-      1000
-    );
 
+            <div class="dados-equipamento">
 
-    // Atualiza relógio a cada segundo
-    setInterval(
-      atualizarRelogio,
-      1000
-    );
+              <div>
 
-  }
-);
+                <span>
+                  Total de apertos
+                </span>
+
+                <b>
+                  0
+                </b>
+
+              </div>
+
+
+              <div>
+
+                <span>
+                  Últimos 10 segundos
+                </span>
+
+                <b>
+                  0
+                </b>
+
+              </div>
+
+
+              <div>
+
+                <span>
+                  Último aperto
+                </span>
+
+                <b>
+                  Sem dados
+                </b>
+
+              </div>
+
+
+              <div>
+
+                <span>
+                  Último sinal online
+                </span>
+
+                <b>
+                  Sem dados
+                </b>
+
+              </div>
+
+            </div>
+
+          </article>
+
+
+          <!-- ========================================
+               ESTAÇÃO 05
+               ======================================== -->
+
+          <article
+            class="card equipamento-card equipamento-card--offline"
+          >
+
+            <div class="equipamento-card__topo">
+
+              <div>
+
+                <p class="rotulo">
+                  ESTAÇÃO 05
+                </p>
+
+
+                <h3>
+                  Parafusadeira 05 · ESP32 05
+                </h3>
+
+              </div>
+
+
+              <span
+                class="status-texto status-texto--offline"
+              >
+                AGUARDANDO
+              </span>
+
+            </div>
+
+
+            <div class="dados-equipamento">
+
+              <div>
+
+                <span>
+                  Total de apertos
+                </span>
+
+                <b>
+                  0
+                </b>
+
+              </div>
+
+
+              <div>
+
+                <span>
+                  Últimos 10 segundos
+                </span>
+
+                <b>
+                  0
+                </b>
+
+              </div>
+
+
+              <div>
+
+                <span>
+                  Último aperto
+                </span>
+
+                <b>
+                  Sem dados
+                </b>
+
+              </div>
+
+
+              <div>
+
+                <span>
+                  Último sinal online
+                </span>
+
+                <b>
+                  Sem dados
+                </b>
+
+              </div>
+
+            </div>
+
+          </article>
+
+
+        </section>
+
+      </main>
+
+    </div>
+
+  </div>
+
+
+  <script src="/js/monitoramento.js"></script>
+
+</body>
+
+</html>
