@@ -1,110 +1,453 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
+
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
   <title>Cavalleti — Sistema de Monitoramento</title>
+
   <link rel="stylesheet" href="css/variables.css">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/dashboard.css">
+
 </head>
+
+
 <body>
 
   <div class="app">
 
-    <!-- Sidebar: navegação principal -->
+    <!-- ==========================================
+         SIDEBAR
+         ========================================== -->
+
     <aside class="sidebar">
+
       <div class="sidebar__logo">
-        <img src="assets/cavalleti-logo-mark.png" alt="Cavalleti">
-        <span>Sistema de monitoramento</span>
+
+        <img
+          src="assets/cavalleti-logo-mark.png"
+          alt="Cavalleti"
+        >
+
+        <span>
+          Sistema de monitoramento
+        </span>
+
       </div>
 
+
       <nav>
+
         <ul>
-          <li><a href="index.html" class="ativo">Dashboard</a></li>
-          <!-- As páginas detalhadas entram depois. Por enquanto,
-               o dashboard já mostra um resumo de cada área. -->
-          <li><a href="monitoramento.html">Monitoramento</a></li>
-          <li><a href="historico.html">Histórico</a></li>
+
+          <li>
+
+            <a href="index.html" class="ativo">
+              Dashboard
+            </a>
+
+          </li>
+
+
+          <li>
+
+            <a href="monitoramento.html">
+              Monitoramento
+            </a>
+
+          </li>
+
+
+          <li>
+
+            <a href="historico.html">
+              Histórico
+            </a>
+
+          </li>
+
         </ul>
+
       </nav>
+
     </aside>
 
-    <!-- Área principal -->
+
+    <!-- ==========================================
+         ÁREA PRINCIPAL
+         ========================================== -->
+
     <div class="main">
+
+
+      <!-- TOPBAR -->
+
       <header class="topbar">
-        <h1>Visão Geral</h1>
+
+        <h1>
+          Visão Geral
+        </h1>
+
+
         <div class="topbar__info">
-          <span class="topbar__status"><i></i> Aguardando sinais do ESP32</span>
-          <time id="relogio">--:--:--</time>
+
+          <span class="topbar__status">
+
+            <i></i>
+
+            Aguardando sinais do ESP32
+
+          </span>
+
+
+          <time id="relogio">
+            --:--:--
+          </time>
+
         </div>
+
       </header>
 
+
+      <!-- ==========================================
+           CONTEÚDO
+           ========================================== -->
+
       <main class="content">
+
+
+        <!-- INTRODUÇÃO -->
+
         <section class="introducao">
+
           <div>
-            <p class="rotulo">STATUS DA OPERAÇÃO</p>
-            <h2>Resumo do turno</h2>
+
+            <p class="rotulo">
+              STATUS DA OPERAÇÃO
+            </p>
+
+            <h2>
+              Resumo do turno
+            </h2>
+
           </div>
-          <p>O sistema está preparado para cinco estações com ESP32. Aguardando a integração dos sinais reais.</p>
+
+
+          <p>
+            Acompanhe em tempo real o estado das
+            estações e a quantidade de apertos
+            registrados pelo sistema.
+          </p>
+
         </section>
 
-        <section class="cards-indicadores" aria-label="Indicadores principais">
-          <article class="card indicador indicador--azul">
-            <div class="indicador__cabecalho"><span>Parafusos apertados</span><span>↗</span></div>
-            <strong id="total-apertos">—</strong>
-            <p id="descricao-apertos"><b>Aguardando integração</b> para contabilizar apertos</p>
+
+        <!-- ==========================================
+             INDICADORES
+             ========================================== -->
+
+        <section
+          class="cards-indicadores"
+          aria-label="Indicadores principais"
+        >
+
+
+          <!-- TOTAL DE APERTOS -->
+
+          <article
+            class="card indicador indicador--azul"
+          >
+
+            <div class="indicador__cabecalho">
+
+              <span>
+                Parafusos apertados
+              </span>
+
+              <span>
+                ↗
+              </span>
+
+            </div>
+
+
+            <strong id="total-apertos">
+              0
+            </strong>
+
+
+            <p id="descricao-apertos">
+              Nenhum aperto registrado
+            </p>
+
           </article>
-          <article class="card indicador indicador--amarelo">
-            <div class="indicador__cabecalho"><span>Equipamentos online</span><span>◉</span></div>
-            <strong id="equipamentos-online">0 <small>/ 5</small></strong>
-            <p id="descricao-equipamentos"><b>5 ESP32</b> aguardando sinal</p>
+
+
+          <!-- EQUIPAMENTOS ONLINE -->
+
+          <article
+            class="card indicador indicador--amarelo"
+          >
+
+            <div class="indicador__cabecalho">
+
+              <span>
+                Equipamentos online
+              </span>
+
+              <span>
+                ◉
+              </span>
+
+            </div>
+
+
+            <strong id="equipamentos-online">
+              0 <small>/ 5</small>
+            </strong>
+
+
+            <p id="descricao-equipamentos">
+              <b>0 ESP32</b> online
+            </p>
+
           </article>
+
+
+          <!-- APERTOS NOS ÚLTIMOS 10 SEGUNDOS -->
+
+          <article
+            class="card indicador indicador--azul"
+          >
+
+            <div class="indicador__cabecalho">
+
+              <span>
+                Produção atual
+              </span>
+
+              <span>
+                ⟳
+              </span>
+
+            </div>
+
+
+            <strong id="apertos-10-segundos">
+              0
+            </strong>
+
+
+            <p>
+              parafusos nos últimos 10 segundos
+            </p>
+
+          </article>
+
         </section>
+
+
+        <!-- ==========================================
+             PAINÉIS
+             ========================================== -->
 
         <section class="painel-grid">
-          <article class="card painel painel--producao">
+
+
+          <!-- ========================================
+               EQUIPAMENTOS
+               ======================================== -->
+
+          <article class="card painel">
+
+
             <header class="painel__cabecalho">
-              <div><p class="rotulo">PRODUÇÃO</p><h3>Apertos por hora</h3></div>
-              <span class="legenda"><i></i> Aguarda sinais do ESP32</span>
-            </header>
-            <div class="grafico-barras grafico-vazio" id="grafico-producao" aria-label="Gráfico de produção por hora"><p>O gráfico será preenchido quando os sinais de aperto começarem a chegar ao sistema.</p></div>
-          </article>
 
-          <article class="card painel painel--qualidade">
-            <header class="painel__cabecalho"><div><p class="rotulo">QUALIDADE</p><h3>Resultado dos apertos</h3></div></header>
-            <div class="qualidade-conteudo">
-              <div class="grafico-rosca grafico-rosca-vazio" id="grafico-qualidade"><div><strong id="taxa-rosca">—</strong><span>sem dados</span></div></div>
-              <div class="legenda-qualidade">
-                <p><i class="correto"></i><span>Corretos</span><b id="apertos-corretos">—</b></p>
-                <p><i class="incorreto"></i><span>Incorretos</span><b id="apertos-incorretos">—</b></p>
+              <div>
+
+                <p class="rotulo">
+                  EQUIPAMENTOS
+                </p>
+
+                <h3>
+                  Status atual
+                </h3>
+
               </div>
+
+            </header>
+
+
+            <div
+              class="lista-equipamentos"
+              id="lista-equipamentos"
+            >
+
+              <!--
+                O JavaScript preencherá esta área.
+              -->
+
+              <div>
+
+                <i class="status status--offline"></i>
+
+                <span>
+                  Parafusadeira 01 · ESP32 01
+                </span>
+
+                <small>
+                  AGUARDANDO
+                </small>
+
+              </div>
+
+
+              <div>
+
+                <i class="status status--offline"></i>
+
+                <span>
+                  Parafusadeira 02 · ESP32 02
+                </span>
+
+                <small>
+                  AGUARDANDO
+                </small>
+
+              </div>
+
+
+              <div>
+
+                <i class="status status--offline"></i>
+
+                <span>
+                  Parafusadeira 03 · ESP32 03
+                </span>
+
+                <small>
+                  AGUARDANDO
+                </small>
+
+              </div>
+
+
+              <div>
+
+                <i class="status status--offline"></i>
+
+                <span>
+                  Parafusadeira 04 · ESP32 04
+                </span>
+
+                <small>
+                  AGUARDANDO
+                </small>
+
+              </div>
+
+
+              <div>
+
+                <i class="status status--offline"></i>
+
+                <span>
+                  Parafusadeira 05 · ESP32 05
+                </span>
+
+                <small>
+                  AGUARDANDO
+                </small>
+
+              </div>
+
             </div>
+
           </article>
 
-          <article class="card painel">
-            <header class="painel__cabecalho"><div><p class="rotulo">EQUIPAMENTOS</p><h3>Status atual</h3></div></header>
-            <div class="lista-equipamentos" id="lista-equipamentos">
-              <div><i class="status status--offline"></i><span>Parafusadeira 01 · ESP32 01</span><small>AGUARDANDO</small></div>
-              <div><i class="status status--offline"></i><span>Parafusadeira 02 · ESP32 02</span><small>AGUARDANDO</small></div>
-              <div><i class="status status--offline"></i><span>Parafusadeira 03 · ESP32 03</span><small>AGUARDANDO</small></div>
-              <div><i class="status status--offline"></i><span>Parafusadeira 04 · ESP32 04</span><small>AGUARDANDO</small></div>
-              <div><i class="status status--offline"></i><span>Parafusadeira 05 · ESP32 05</span><small>AGUARDANDO</small></div>
-            </div>
-          </article>
+
+          <!-- ========================================
+               INTEGRAÇÃO
+               ======================================== -->
 
           <article class="card painel">
-            <header class="painel__cabecalho"><div><p class="rotulo">INTEGRAÇÃO</p><h3>Estado atual</h3></div><span class="contador-alerta">!</span></header>
-            <div class="lista-alertas">
-              <div class="alerta alerta--amarelo"><b>!</b><p><strong>ESP32 ainda não envia dados</strong><span>Os sinais de parada do fluxo precisam ser integrados.</span></p><time>pendente</time></div>
-              <div class="alerta alerta--azul"><b>i</b><p><strong>Capacidade da caixa não definida</strong><span>O nível será exibido após os testes de capacidade.</span></p><time>pendente</time></div>
+
+
+            <header class="painel__cabecalho">
+
+              <div>
+
+                <p class="rotulo">
+                  INTEGRAÇÃO
+                </p>
+
+                <h3>
+                  Estado atual
+                </h3>
+
+              </div>
+
+
+              <span
+                class="contador-alerta"
+                id="contador-alerta"
+              >
+                !
+              </span>
+
+            </header>
+
+
+            <div
+              class="lista-alertas"
+              id="lista-alertas"
+            >
+
+              <div class="alerta alerta--amarelo">
+
+                <b>!</b>
+
+                <p>
+
+                  <strong>
+                    Aguardando sinais dos ESP32
+                  </strong>
+
+                  <span>
+                    Nenhum equipamento enviou dados ainda.
+                  </span>
+
+                </p>
+
+                <time>
+                  aguardando
+                </time>
+
+              </div>
+
             </div>
+
           </article>
+
+
         </section>
+
       </main>
+
     </div>
 
   </div>
-  <script src="dashboard.js"></script>
+
+
+  <script src="/js/dashboard.js"></script>
+
 </body>
+
 </html>
