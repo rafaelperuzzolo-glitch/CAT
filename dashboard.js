@@ -1,95 +1,114 @@
+// ==========================================
+// CONFIGURAÇÕES DA API
+// ==========================================
+// Aponta explicitamente para a porta 3000 onde a API do Express está rodando
+const API_URL = "https://symmetrical-space-sniffle-x95x5xw4799hvv47-3000.app.github.dev/api/status";
+
+// ==========================================
+// ATUALIZAÇÃO DO DASHBOARD
+// ==========================================
 async function atualizarDashboard() {
   try {
-    const resposta = await fetch("/api/status");
+    const resposta = await fetch(API_URL);
 
     if (!resposta.ok) {
-      throw new Error("Erro ao consultar API");
+      throw new Error(`Erro na API (Status HTTP: ${resposta.status})`);
     }
 
     const dados = await resposta.json();
 
-    // Total de apertos
-    document.getElementById("total-apertos").textContent =
-      dados.totalApertos;
+    // 1. Total de apertos
+    const totalApertosEl = document.getElementById("total-apertos");
+    if (totalApertosEl) {
+      totalApertosEl.textContent = dados.totalApertos;
+    }
 
-    document.getElementById("descricao-apertos").innerHTML =
-      `<b>${dados.totalApertos}</b> apertos registrados`;
+    const descApertosEl = document.getElementById("descricao-apertos");
+    if (descApertosEl) {
+      descApertosEl.innerHTML = `<b>${dados.totalApertos}</b> apertos registrados`;
+    }
 
-    // Equipamentos
-    document.getElementById("equipamentos-online").innerHTML =
-      `${dados.equipamentosOnline} <small>/ 5</small>`;
+    // 2. Equipamentos online
+    const eqOnlineEl = document.getElementById("equipamentos-online");
+    if (eqOnlineEl) {
+      eqOnlineEl.innerHTML = `${dados.equipamentosOnline} <small>/ 5</small>`;
+    }
 
-    document.getElementById("descricao-equipamentos").innerHTML =
-      `<b>${dados.equipamentosOnline} ESP32</b> online`;
+    const descEqEl = document.getElementById("descricao-equipamentos");
+    if (descEqEl) {
+      descEqEl.innerHTML = `<b>${dados.equipamentosOnline} ESP32</b> online`;
+    }
 
-    // Qualidade
-    document.getElementById("apertos-corretos").textContent =
-      dados.corretos;
+    // 3. Qualidade
+    const apertosCorretosEl = document.getElementById("apertos-corretos");
+    if (apertosCorretosEl) {
+      apertosCorretosEl.textContent = dados.corretos;
+    }
 
-    document.getElementById("apertos-incorretos").textContent =
-      dados.incorretos;
+    const apertosIncorretosEl = document.getElementById("apertos-incorretos");
+    if (apertosIncorretosEl) {
+      apertosIncorretosEl.textContent = dados.incorretos;
+    }
 
-    const total =
-      dados.corretos + dados.incorretos;
+    const total = dados.corretos + dados.incorretos;
+    const taxa = total > 0 ? Math.round((dados.corretos / total) * 100) : 0;
 
-    const taxa =
-      total > 0
-        ? Math.round((dados.corretos / total) * 100)
-        : 0;
+    const taxaRoscaEl = document.getElementById("taxa-rosca");
+    if (taxaRoscaEl) {
+      taxaRoscaEl.textContent = total > 0 ? `${taxa}%` : "—";
+    }
 
-    document.getElementById("taxa-rosca").textContent =
-      total > 0 ? `${taxa}%` : "—";
+    // 4. Lista dos equipamentos
+    const lista = document.getElementById("lista-equipamentos");
+    if (lista && dados.equipamentos) {
+      lista.innerHTML = "";
 
-    // Lista dos equipamentos
-    const lista =
-      document.getElementById("lista-equipamentos");
-
-    lista.innerHTML = "";
-
-    Object.entries(dados.equipamentos).forEach(
-      ([esp32, equipamento]) => {
-
+      Object.entries(dados.equipamentos).forEach(([esp32, equipamento]) => {
         const div = document.createElement("div");
 
-        const status = equipamento.online
+        const statusClass = equipamento.online
           ? "status--online"
           : "status--offline";
 
-        const texto = equipamento.online
-          ? "ONLINE"
-          : "AGUARDANDO";
+        const textoStatus = equipamento.online ? "ONLINE" : "AGUARDANDO";
 
         div.innerHTML = `
-          <i class="status ${status}"></i>
+          <i class="status ${statusClass}"></i>
           <span>
             ${equipamento.nome} · ${esp32}
           </span>
-          <small>${texto}</small>
+          <small>${textoStatus}</small>
         `;
 
         lista.appendChild(div);
-      }
-    );
+      });
+    }
 
   } catch (erro) {
-    console.error("Erro:", erro);
+    console.error("Falha ao atualizar o dashboard:", erro);
   }
 }
 
-// Atualiza imediatamente
-atualizarDashboard();
-
-// Atualiza a cada segundo
-setInterval(atualizarDashboard, 1000);
-
-
-// Relógio
+// ==========================================
+// RELÓGIO EM TEMPO REAL
+// ==========================================
 function atualizarRelogio() {
-  const agora = new Date();
-
-  document.getElementById("relogio").textContent =
-    agora.toLocaleTimeString("pt-BR");
+  const relogioEl = document.getElementById("relogio");
+  if (relogioEl) {
+    const agora = new Date();
+    relogioEl.textContent = agora.toLocaleTimeString("pt-BR");
+  }
 }
 
-setInterval(atualizarRelogio, 1000);
-atualizarRelogio();
+// ==========================================
+// INICIALIZAÇÃO E INTERVALOS
+// ==========================================
+document.addEventListener("DOMContentLoaded", () => {
+  // Executa imediatamente no carregamento da página
+  atualizarDashboard();
+  atualizarRelogio();
+
+  // Executa as atualizações a cada 1 segundo (1000ms)
+  setInterval(atualizarDashboard, 1000);
+  setInterval(atualizarRelogio, 1000);
+});
